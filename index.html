@@ -13,16 +13,16 @@
     var ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false
 
-    canvas.width = 100
+    canvas.width = 500
     canvas.height = 500
 
     function drawOnCanvas(array) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       for(let i = 0; i < array.length; i++) {
-        ctx.moveTo(i*2, 500);
-        ctx.lineTo(i, 500 - array[i]);
-        
+        // ctx.moveTo(i, 500);
+        // ctx.lineTo(i, 500 - array[i]);
+        ctx.fillRect(i * 5, 500 - array[i], 5, array[i])
       }
       ctx.stroke();
     }
@@ -50,11 +50,12 @@
         array[j] = array[j + 1]
         array[j + 1] = swap
       }
-      if(j == array.length - 1){
+      j++
+      if(j == array.length - i){
         i++
         j = 0
       }
-      j++
+      
       drawOnCanvas(array)
     }
     const myInterval = setInterval(loop, 1);
