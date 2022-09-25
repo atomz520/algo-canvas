@@ -7,41 +7,57 @@
   <title>Document</title>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
+  <canvas id="canvas" style="width:500px; height:500px;"></canvas>
   <script>
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false
 
-    canvas.width = 500
+    canvas.width = 100
     canvas.height = 500
 
     function drawOnCanvas(array) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
       for(let i = 0; i < array.length; i++) {
-        ctx.moveTo(i + 1, 500);
-        ctx.lineTo(i + 1, 500 - array[i]);
-        ctx.stroke();
+        ctx.moveTo(i*2, 500);
+        ctx.lineTo(i, 500 - array[i]);
+        
       }
+      ctx.stroke();
     }
 
-    let array = Array(500)
+    let array = Array(100)
     for(let i = 0; i < array.length; i++) {
       array[i] = parseInt(Math.random()*500)
     }
-    for(let i = 0; i < array.length; i++) {
-      for(let j = 0; j < array.length - 1; j++) {
-        setTimeout(() => {
-          if(array[j] > array[j + 1]){
-            let swap = array[j]
-            array[j] = array[j + 1]
-            array[j + 1] = swap
-            drawOnCanvas(array)
-          }
-        }, 100)
-      }
-    }
-    drawOnCanvas(array)
+    // for(let i = 0; i < array.length; i++) {
+    //   for(let j = 0; j < array.length - 1; j++) {
+    //       if(array[j] > array[j + 1]){
+    //         let swap = array[j]
+    //         array[j] = array[j + 1]
+    //         array[j + 1] = swap
+    //       }
+    //   }
+    // }
+    
     console.log(array)
+    let i = 0
+    let j = 0
+    function loop() {
+      if(array[j] > array[j + 1]){
+        let swap = array[j]
+        array[j] = array[j + 1]
+        array[j + 1] = swap
+      }
+      if(j == array.length - 1){
+        i++
+        j = 0
+      }
+      j++
+      drawOnCanvas(array)
+    }
+    const myInterval = setInterval(loop, 1);
   </script>
 </body>
 </html>
